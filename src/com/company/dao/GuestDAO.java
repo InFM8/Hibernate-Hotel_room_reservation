@@ -13,7 +13,6 @@ public class GuestDAO {
         session.save(guest);
 
         session.getTransaction().commit();
-
     }
     public Guest searchByRoomID(int hotel){
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();

@@ -1,7 +1,7 @@
 package com.company.utils;
 
 import com.company.entity.Guest;
-import com.company.entity.Hotel;
+import com.company.entity.Room;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
@@ -34,7 +34,7 @@ public class HibernateUtil {
 
                 configuration.setProperties(settings);
                 configuration.addAnnotatedClass(Guest.class); //Entity
-                configuration.addAnnotatedClass(Hotel.class);//Entity
+                configuration.addAnnotatedClass(Room.class);//Entity
 
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                         .applySettings(configuration.getProperties()).build();

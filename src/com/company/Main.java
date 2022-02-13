@@ -24,10 +24,10 @@ public class Main {
 
         Scanner sc = new Scanner(System.in);
         System.out.println("Iveskite svecio varda : ");
-        //String vardas = sc.next();
+        String vardas = sc.next();
         System.out.println("Iveskite svecio pavarde : ");
-        //String pavarde = sc.next();
-        //Guest guest = new Guest(vardas, pavarde);
+        String pavarde = sc.next();
+        Guest guest = new Guest(vardas, pavarde);
 
         List<Hotel> list = hotelDAO.searchForRooms();
         for(Hotel roomList: list) {
@@ -61,11 +61,11 @@ public class Main {
 //                guestDAO.delete(guest);
 //            }
 
-//        hotelDAO.insert(room1);
-//        hotelDAO.insert(room2);
-//        hotelDAO.insert(room3);
-//        hotelDAO.insert(room4);
-//        hotelDAO.insert(room5);
+        hotelDAO.insert(room1);
+        hotelDAO.insert(room2);
+        hotelDAO.insert(room3);
+        hotelDAO.insert(room4);
+        hotelDAO.insert(room5);
 
 
 //        Guest guest1 = guestDAO.searchByRoomID(1);

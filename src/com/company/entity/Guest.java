@@ -3,10 +3,9 @@ package com.company.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name="sveciai")
 public class Guest {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)//A.I.
 
     @Column(name="id")
     private int id;
@@ -19,19 +18,20 @@ public class Guest {
 
     @ManyToOne()
     @JoinColumn(name="kambario_id")
-    private Hotel hotel;
+    private Room room;
+
+    public Guest(){}
+
+    public Guest(String name, String surname) {
+        this.name = name;
+        this.surname = surname;
+    }
 
     public Guest(int id, String name, String surname) {
         this.id = id;
         this.name = name;
         this.surname = surname;
     }
-
-    public Guest(String name, String surname) {
-        this.name = name;
-        this.surname = surname;
-    }
-    public Guest(){}
 
     public int getId() {
         return id;
@@ -57,12 +57,12 @@ public class Guest {
         this.surname = surname;
     }
 
-    public Hotel getHotel() {
-        return hotel;
+    public Room getRoom() {
+        return room;
     }
 
-    public void setHotel(Hotel hotel) {
-        this.hotel = hotel;
+    public void setRoom(Room room) {
+        this.room = room;
     }
 
     @Override
