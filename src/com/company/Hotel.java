@@ -12,12 +12,14 @@ public class Hotel {
     RoomDAO roomDAO = new RoomDAO();
     GuestDAO guestDAO = new GuestDAO();
 
+    boolean status = roomDAO.searchForStatus(true);
+
     Room rooms[] = {
             new Room(1, false),
             new Room(2, false),
-            new Room(3, false),
-            new Room(4, false),
-            new Room(5, false)
+            new Room(3, status),
+            new Room(4, status),
+            new Room(5, status)
     };
 
     int findFreeRoom() {
@@ -44,25 +46,36 @@ public class Hotel {
 
     void placeGuest() {
         int room = findFreeRoom();
-        //MAIN
+        boolean occupy = occupyRoom(room);
+
         GuestDAO guestDAO = new GuestDAO();
         RoomDAO roomDAO = new RoomDAO();
 
-        Guest guest = new Guest("Test","TEST");
-        //MAIN
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Iveskite svecio varda : ");
+        String name = sc.next();
+        System.out.println("Iveskite svecio pavarde : ");
+        String surname = sc.next();
+
+        Guest guest = new Guest(name, surname);
 
         if (room == -1) {
             System.out.println("Siuo metu laisvu kambariu nera");
-            guestDAO.delete(guest);// Delete
+            //guestDAO.delete(guest);
             return;
         }
         if (!occupyRoom(room)) {
             System.out.println("Numeris yra uzimtas, arba tokio nr nera");
-            guestDAO.delete(guest); //Delete
+            //guestDAO.delete(guest);
+            //return;
         }
         System.out.println("Jusu kambario nr. yra " + room);
-        roomDAO.update(room);   //Insertinam, updatinam jei atitinka salygas(Jei neegzistuoja insert.)
-       // guest.setRoom(room);    //Priskiriam kambari klientui
+
+
+        Room room1 = new Room(room,occupy);
+
+        roomDAO.update(room1);   //Insertinam, updatinam jei atitinka salygas(Jei neegzistuoja insert.)
+        guest.setRoom(room1);    //Priskiriam kambari klientui
         guestDAO.insert(guest); //Insertinam
     }
 
@@ -70,6 +83,8 @@ public class Hotel {
         Hotel room = new Hotel();
         RoomDAO roomDAO = new RoomDAO();
         GuestDAO guestDAO = new GuestDAO();
+
+
 
         room.placeGuest();
 //        Scanner sc = new Scanner(System.in);
@@ -79,8 +94,9 @@ public class Hotel {
 //        String surname = sc.next();
 //
 //        Guest g = new Guest(name, surname);
-//        Room room1 = new Room(2, false);
 
+
+        //roomDAO.updateByID(0,5);
 
 
 
@@ -89,11 +105,6 @@ public class Hotel {
 //  1.      roomDAO.insert(room1);
 //  2.      g.setRoom(room1);
 //  3.      guestDAO.insert(g);
-
-
-
-
-
 
 
 

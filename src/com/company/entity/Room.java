@@ -13,11 +13,9 @@ public class Room {
     @Column(name = "statusas")
     boolean in_use;
 
+
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
     private List<Guest> guests;
-
-//    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
-//    private List<Guest> guests;
     public Room(){}
 
     public Room(int number) {
