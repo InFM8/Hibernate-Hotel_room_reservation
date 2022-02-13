@@ -71,7 +71,6 @@ public class Guest {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
-                ", hotel=" + hotel +
                 '}';
     }
 }

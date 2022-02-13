@@ -11,6 +11,9 @@ public class Hotel {
     @Column(name="kambarys")
     private int room;
 
+    @Column(name="statusas")
+    private boolean status;
+
     @OneToMany(mappedBy = "hotel",cascade = CascadeType.ALL)
     private List<Guest> guests;
 
@@ -20,12 +23,25 @@ public class Hotel {
         this.room = room;
     }
 
+    public Hotel(int room, boolean status) {
+        this.room = room;
+        this.status = status;
+    }
+
     public int getRoom() {
         return room;
     }
 
     public void setRoom(int room) {
         this.room = room;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
     public List<Guest> getGuests() {
@@ -40,6 +56,7 @@ public class Hotel {
     public String toString() {
         return "Hotel{" +
                 "room=" + room +
+                ", status=" + status +
                 ", guests=" + guests +
                 '}';
     }

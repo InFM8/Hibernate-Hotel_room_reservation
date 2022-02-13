@@ -6,10 +6,10 @@ import com.company.entity.Guest;
 import com.company.entity.Hotel;
 import com.company.utils.HibernateUtil;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
-
     public static void main(String[] args) {
         HotelDAO hotelDAO = new HotelDAO();
         GuestDAO guestDAO = new GuestDAO();
@@ -20,42 +20,62 @@ public class Main {
         Hotel room4 = new Hotel(4);
         Hotel room5 = new Hotel(5);
 
+        boolean[] rooms = new boolean[5];
+
         Scanner sc = new Scanner(System.in);
         System.out.println("Iveskite svecio varda : ");
-        String vardas = sc.next();
+        //String vardas = sc.next();
         System.out.println("Iveskite svecio pavarde : ");
-        String pavarde = sc.next();
+        //String pavarde = sc.next();
+        //Guest guest = new Guest(vardas, pavarde);
 
-        Guest guest = new Guest(vardas,pavarde);
-        int sk = (int) (Math.random() * 4);
-        if(sk == 0) {
-            guest.setHotel(room1);
-        } else if(sk == 1) {
-            guest.setHotel(room2);
-        } else if(sk == 2) {
-            guest.setHotel(room3);
-        } else if(sk ==3) {
-            guest.setHotel(room4);
-        } else if(sk ==4) {
-            guest.setHotel(room5);
-        } else{
-            System.out.println("Nera laisvu kambariu");
+        List<Hotel> list = hotelDAO.searchForRooms();
+        for(Hotel roomList: list) {
+            System.out.println(roomList);
         }
+
+//        boolean status = hotelDAO.searchForStatus(false);
+//        boolean found = false;
+
+
+//        for (int i = 0; i < rooms.length; i++) {
+//            if (rooms[0] == status) {
+//                guest.setHotel(room1);
+//                guestDAO.insert(guest);
+//
+//                Hotel notEmpty = new Hotel(1, true);
+//                hotelDAO.update(notEmpty);
+//                found = true;
+//                continue;
+//            } else if (rooms[1] == status) {
+//                guest.setHotel(room2);
+//                guestDAO.insert(guest);
+//                Hotel true2 = new Hotel(2, true);
+//                hotelDAO.update(true2);
+//                System.out.println("Jusu kambarys yra antras");
+//                continue;
+//
+
+//            } else {
+//                System.out.println("Nera laisvu kambariu");
+//                guestDAO.delete(guest);
+//            }
+
 //        hotelDAO.insert(room1);
 //        hotelDAO.insert(room2);
 //        hotelDAO.insert(room3);
 //        hotelDAO.insert(room4);
 //        hotelDAO.insert(room5);
 
-//        guest.setHotel(room1);
 
-//        guestDAO.insert(guest);
+//        Guest guest1 = guestDAO.searchByRoomID(1);
+//        System.out.println(guest1);
 
 
-       // hotelDAO.searchForRooms();
-
+        // hotelDAO.searchForRooms();
 
 
         HibernateUtil.getSessionFactory().close();
+
     }
 }

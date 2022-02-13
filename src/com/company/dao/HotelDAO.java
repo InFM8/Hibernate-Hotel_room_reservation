@@ -22,11 +22,29 @@ public class HotelDAO {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
 
-        List<Hotel> hotels = new ArrayList<>();
+        List<Hotel> hotels;
         hotels = session.createQuery("FROM Hotel").getResultList();
 
         return hotels;
     }
+    public void update(Hotel hotel){
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+
+        session.update(hotel);
+
+        session.getTransaction().commit();
+    }
+    public boolean searchForStatus(boolean status) {
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+
+        List<Hotel> hotels;
+        hotels = session.createQuery("FROM Hotel c WHERE c.status ="+status).getResultList();
+
+        return status;
+    }
+
 
 
 }
