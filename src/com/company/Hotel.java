@@ -27,8 +27,6 @@ public class Hotel {
             new Room(id5.getNumber(), id5.isIn_use())
     };
 
-
-
     int findFreeRoom() {
         for (int i = 0; i < rooms.length; i++) {
             if (!rooms[i].isIn_use()) {
@@ -79,7 +77,7 @@ public class Hotel {
         System.out.println("Jusu kambario nr. yra " + room);
 
 
-        Room room1 = new Room(room,occupy);
+        Room room1 = new Room(room, occupy);
 
         roomDAO.update(room1);   //Insertinam, updatinam jei atitinka salygas(Jei neegzistuoja insert.)
         guest.setRoom(room1);    //Priskiriam kambari klientui
@@ -91,43 +89,8 @@ public class Hotel {
         Hotel room = new Hotel();
         RoomDAO roomDAO = new RoomDAO();
         GuestDAO guestDAO = new GuestDAO();
-//        boolean freeRooms = roomDAO.searchForRooms(false);
-//        System.out.println(freeRooms);
-//        List<Room> statusByint= roomDAO.searchStatusByInt(3);
-//        System.out.println(statusByint);
 
-//        System.out.println("By id : ");
-//        Room id = roomDAO.searchByID(1);
-//        System.out.println(id);
-        List<Room> ubioList = roomDAO.searchForRooms();
-        for (Room ub : ubioList) {
-            System.out.println(ub);
-        }
-
-
-        //room.placeGuest();
-//        Scanner sc = new Scanner(System.in);
-//        System.out.println("Iveskite svecio varda : ");
-//        String name = sc.next();
-//        System.out.println("Iveskite svecio pavarde : ");
-//        String surname = sc.next();
-//
-//        Guest g = new Guest(name, surname);
-
-
-        //roomDAO.updateByID(0,5);
-
-
-
-
-//  1.      roomDAO.update(room1);
-//  1.      roomDAO.insert(room1);
-//  2.      g.setRoom(room1);
-//  3.      guestDAO.insert(g);
-
-
-
-
+        room.placeGuest();
 
 
         HibernateUtil.getSessionFactory().close();
