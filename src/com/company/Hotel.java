@@ -6,21 +6,28 @@ import com.company.entity.Guest;
 import com.company.entity.Room;
 import com.company.utils.HibernateUtil;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class Hotel {
     RoomDAO roomDAO = new RoomDAO();
     GuestDAO guestDAO = new GuestDAO();
 
-    boolean status = roomDAO.searchForStatus(true);
+    Room id1 = roomDAO.searchByID(1);
+    Room id2 = roomDAO.searchByID(2);
+    Room id3 = roomDAO.searchByID(3);
+    Room id4 = roomDAO.searchByID(4);
+    Room id5 = roomDAO.searchByID(5);
 
     Room rooms[] = {
-            new Room(1, false),
-            new Room(2, false),
-            new Room(3, status),
-            new Room(4, status),
-            new Room(5, status)
+            new Room(id1.getNumber(), id1.isIn_use()),
+            new Room(id2.getNumber(), id2.isIn_use()),
+            new Room(id3.getNumber(), id3.isIn_use()),
+            new Room(id4.getNumber(), id4.isIn_use()),
+            new Room(id5.getNumber(), id5.isIn_use())
     };
+
+
 
     int findFreeRoom() {
         for (int i = 0; i < rooms.length; i++) {
@@ -79,14 +86,26 @@ public class Hotel {
         guestDAO.insert(guest); //Insertinam
     }
 
+
     public static void main(String[] args) {
         Hotel room = new Hotel();
         RoomDAO roomDAO = new RoomDAO();
         GuestDAO guestDAO = new GuestDAO();
+//        boolean freeRooms = roomDAO.searchForRooms(false);
+//        System.out.println(freeRooms);
+//        List<Room> statusByint= roomDAO.searchStatusByInt(3);
+//        System.out.println(statusByint);
+
+//        System.out.println("By id : ");
+//        Room id = roomDAO.searchByID(1);
+//        System.out.println(id);
+        List<Room> ubioList = roomDAO.searchForRooms();
+        for (Room ub : ubioList) {
+            System.out.println(ub);
+        }
 
 
-
-        room.placeGuest();
+        //room.placeGuest();
 //        Scanner sc = new Scanner(System.in);
 //        System.out.println("Iveskite svecio varda : ");
 //        String name = sc.next();

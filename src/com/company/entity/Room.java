@@ -56,7 +56,6 @@ public class Room {
         return "Room{" +
                 "number=" + number +
                 ", in_use=" + in_use +
-                ", guests=" + guests +
                 '}';
     }
 }
