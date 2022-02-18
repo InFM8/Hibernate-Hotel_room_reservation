@@ -66,31 +66,27 @@ public class Hotel {
 
         if (room == -1) {
             System.out.println("Siuo metu laisvu kambariu nera");
-            //guestDAO.delete(guest);
             return;
         }
-        if (!occupyRoom(room)) {
-            System.out.println("Numeris yra uzimtas, arba tokio nr nera");
-            //guestDAO.delete(guest);
-            //return;
-        }
+//        if (!occupyRoom(room)) {
+//            System.out.println("Numeris yra uzimtas, arba tokio numerio nera");
+//            //return;
+//        }
         System.out.println("Jusu kambario nr. yra " + room);
-
-
         Room room1 = new Room(room, occupy);
 
         roomDAO.update(room1);   //Insertinam, updatinam jei atitinka salygas(Jei neegzistuoja insert.)
         guest.setRoom(room1);    //Priskiriam kambari klientui
-        guestDAO.insert(guest); //Insertinam
+        guestDAO.insert(guest);  //Insertinam
     }
 
 
     public static void main(String[] args) {
-        Hotel room = new Hotel();
+        Hotel hotel = new Hotel();
         RoomDAO roomDAO = new RoomDAO();
         GuestDAO guestDAO = new GuestDAO();
 
-        room.placeGuest();
+        hotel.placeGuest();
 
 
         HibernateUtil.getSessionFactory().close();
