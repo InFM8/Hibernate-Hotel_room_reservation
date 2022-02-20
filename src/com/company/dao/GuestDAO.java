@@ -19,6 +19,14 @@ public class GuestDAO {
         session.save(guest);
         session.getTransaction().commit();
     }
+    public List<Guest> updateGuestStatusByID(int id) {
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        List<Guest> guests;
+        guests = session.createQuery("UPDATE Guest g SET g.room.in_use=true WHERE g.id="+id).getResultList();
+        session.getTransaction().commit();
+        return guests;
+    }
 
     public List<Guest> showGuestRoom() {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();

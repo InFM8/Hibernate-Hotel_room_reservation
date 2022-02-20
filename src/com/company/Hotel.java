@@ -12,6 +12,7 @@ import java.util.Scanner;
 public class Hotel {
     RoomDAO roomDAO = new RoomDAO();
     GuestDAO guestDAO = new GuestDAO();
+    Scanner sc = new Scanner(System.in);
 
     Room id1 = roomDAO.searchByID(1);
     Room id2 = roomDAO.searchByID(2);
@@ -53,10 +54,6 @@ public class Hotel {
         int room = findFreeRoom();
         boolean occupy = occupyRoom(room);
 
-        GuestDAO guestDAO = new GuestDAO();
-        RoomDAO roomDAO = new RoomDAO();
-
-        Scanner sc = new Scanner(System.in);
         System.out.println("Iveskite svecio varda : ");
         String name = sc.next();
         System.out.println("Iveskite svecio pavarde : ");
@@ -76,9 +73,13 @@ public class Hotel {
         Room room1 = new Room(room, occupy);
 
         roomDAO.update(room1);   //Insertinam, updatinam jei atitinka salygas(Jei neegzistuoja insert.)
-        guest.setRoom(room1);    //Priskiriam kambari klientui
+        guest.setRoom(room1);    //Priskiriam kambari klientui (VISIEMS KLIENTAMS KURIU kambario id kazkada buvo toks...)
+        //int id = guest.getId();
+        //guestDAO.updateGuestStatusByID(id);
         guestDAO.insert(guest);  //Insertinam
+
     }
+
 
     void roomList() {
         List<Room> rooms = roomDAO.searchForRooms();
@@ -98,29 +99,52 @@ public class Hotel {
         Room room = new Room(id, false);
         room.setIn_use(false);
         roomDAO.update(room);
+        System.out.println("Svecias sekmingai isregistruotas\n");
+    }
+
+    void unRegisterGuest() {
+        System.out.println("Iveskite kambario numeri is kurio isvyko svecias : ");
+        int s = sc.nextInt();
+        unRegGuestByRoomId(s);
+    }
+
+    void func() {
+        Hotel hotel = new Hotel();
+        Scanner sc = new Scanner(System.in);
+        System.out.println("   Pasirinkite galimus veiksmus\n" +
+                "1. Svecio registracija\n" +
+                "2. Svecio isregistravimas\n" +
+                "3. Kambariu uzimtumo perziura\n" +
+                "4. Kambario istorija\n" +
+                ": ");
+        int s = sc.nextInt();
+        if (s == 1) {
+            System.out.println("-     Svecio registracija\n");
+            hotel.placeGuest();
+        } else if (s == 2) {
+            System.out.println("-     Svecio isregistravimas pagal kambario numeri\n");
+            hotel.unRegisterGuest();
+        } else if (s == 3) {
+            System.out.println("-     Kambariu uzimtumo perziura\n");
+            guestDAO.occupiedRoomAtTheMoment();
+        } else if (s == 4) {
+            System.out.println("-     Kambariu istorija ir statusas\n");
+            hotel.guestList();
+        } else {
+            System.out.println("Blogai ivesta");
+        }
+
+        //roomDAO.searchForRooms(true);
+        //hotel.roomList();
     }
 
     public static void main(String[] args) {
-        Hotel hotel = new Hotel();
-        RoomDAO roomDAO = new RoomDAO();
-        GuestDAO guestDAO = new GuestDAO();
+        Hotel h = new Hotel();
 
-        //hotel.placeGuest();                 //1. uzduotis
-        //hotel.unRegGuestByRoomId(3);        //2. uzduotis
-        //guestDAO.occupiedRoomAtTheMoment(); //3. uzduotis
-        //hotel.guestList();                    //4. uzduotis
-
-
-        //roomDAO.searchForRooms(true);
-        hotel.roomList();
-
-
-        roomDAO.occupiedRoomATM();
-
-        //guestDAO.showGuestRoom();
-        //guestDAO.showGuestRoom1();
+        h.func();
 
 
         HibernateUtil.getSessionFactory().close();
     }
 }
+
