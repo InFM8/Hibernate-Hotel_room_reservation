@@ -33,8 +33,15 @@ public class Guest {
         this.surname = surname;
     }
 
+
     public Guest(int id, String name, String surname, Room room) {
         this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.room = room;
+    }
+
+    public Guest(String name, String surname, Room room) {
         this.name = name;
         this.surname = surname;
         this.room = room;

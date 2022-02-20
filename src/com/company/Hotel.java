@@ -83,17 +83,20 @@ public class Hotel {
     void roomList() {
         List<Room> rooms = roomDAO.searchForRooms();
         for (Room rList : rooms) {
-            System.out.println("   "+rList);
+            System.out.println("   " + rList);
         }
     }
+
     void guestList() {
         List<Guest> guests = guestDAO.searchForGuests();
         for (Guest gList : guests) {
-            System.out.println("   "+gList);
+            System.out.println("   " + gList);
         }
     }
-    void unRegGuestByRoomId(int id){
+
+    void unRegGuestByRoomId(int id) {
         Room room = new Room(id, false);
+        room.setIn_use(false);
         roomDAO.update(room);
     }
 
@@ -103,35 +106,19 @@ public class Hotel {
         GuestDAO guestDAO = new GuestDAO();
 
         //hotel.placeGuest();                 //1. uzduotis
-        //hotel.unRegGuestByRoomId(4);        //2. uzduotis
+        //hotel.unRegGuestByRoomId(3);        //2. uzduotis
+        //guestDAO.occupiedRoomAtTheMoment(); //3. uzduotis
+        //hotel.guestList();                    //4. uzduotis
 
-
-        //hotel.guestList();                  //4. uzduotis
-
-
-        //roomDAO.occupiedRoomATM();
-
-
-        //hotel.roomList();
 
         //roomDAO.searchForRooms(true);
+        hotel.roomList();
 
-        // guestDAO.showGuestRoom();
+
+        roomDAO.occupiedRoomATM();
+
+        //guestDAO.showGuestRoom();
         //guestDAO.showGuestRoom1();
-
-        //roomDAO.showRooms();
-
-
-
-
-
-
-
-
-
-
-
-
 
 
         HibernateUtil.getSessionFactory().close();

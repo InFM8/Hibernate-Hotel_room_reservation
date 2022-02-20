@@ -3,6 +3,7 @@ package com.company.dao;
 import com.company.entity.Guest;
 import com.company.entity.Room;
 import com.company.utils.HibernateUtil;
+import javafx.fxml.LoadException;
 import org.hibernate.Session;
 
 import javax.naming.directory.SearchResult;
@@ -27,7 +28,8 @@ public class GuestDAO {
         session.getTransaction().commit();
         return guests;
     }
-    public List<Guest> showGuestRoom1 (){
+
+    public List<Guest> showGuestRoom1() {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
         List<Guest> guests;
@@ -60,4 +62,28 @@ public class GuestDAO {
         session.getTransaction().commit();
         return guests;
     }
+
+    public List<Guest> occupiedRoomAtTheMoment() {
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        List<Guest> guests;
+        guests = session.createQuery("FROM Guest g WHERE g.room.in_use=true").getResultList();
+        for(Guest g: guests){
+            System.out.println(g);
+        }
+        //FROM Room r JOIN r.guests g WHERE r.in_use=true
+        //FROM Room r, Guest g WHERE r.in_use=true
+        session.getTransaction().commit();
+        return guests;
+    }
 }
+//    public List<Room> occupiedRoomATM() {
+//        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+//        session.beginTransaction();
+//        List<Room> rooms;               //SELECT g.room, g.name, g.surname, r.in_use
+//        //FROM Room r, Guest g WHERE r.in_use=true
+//        //SELECT g.room, g.name, g.surname, r.in_use FROM Room r JOIN r.guests g WHERE r.in_use=true
+//        rooms = session.createQuery("SELECT g.room, g.name, g.surname, r.in_use FROM Room r, Guest g WHERE r.in_use=true").getResultList();
+//        session.getTransaction().commit();
+//        return rooms;
+//    }

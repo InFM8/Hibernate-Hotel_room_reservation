@@ -1,11 +1,10 @@
 package com.company.dao;
 
-import com.company.entity.Guest;
 import com.company.entity.Room;
 import com.company.utils.HibernateUtil;
 import org.hibernate.Session;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 public class RoomDAO {
@@ -33,7 +32,7 @@ public class RoomDAO {
     }
     public void update(Room room) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction(); //Transaction already active...
+        session.beginTransaction();
         session.update(room);
         session.getTransaction().commit();
     }
@@ -55,6 +54,7 @@ public class RoomDAO {
         }
         return free;
     }
+
     public List<Room> searchStatusByInt(int num) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
@@ -68,9 +68,10 @@ public class RoomDAO {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
         List<Room> rooms;               //SELECT g.room, g.name, g.surname, r.in_use
-                                        //FROM Room r, Guest g WHERE r.in_use
-        rooms = session.createQuery("SELECT g.room, g.name, g.surname, r.in_use FROM Room r, Guest g WHERE r.in_use=true").getResultList();
-        session.getTransaction().commit();
+                                        //FROM Room r, Guest g WHERE r.in_use=true
+                        //SELECT g.room, g.name, g.surname, r.in_use FROM Room r JOIN r.guests g WHERE r.in_use=true
+        rooms = session.createQuery("FROM Room r JOIN r.guests g WHERE r.in_use=true").getResultList();
+
         return rooms;
     }
 }
