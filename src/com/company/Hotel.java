@@ -102,13 +102,26 @@ public class Hotel {
         RoomDAO roomDAO = new RoomDAO();
         GuestDAO guestDAO = new GuestDAO();
 
-        //hotel.placeGuest();
-        //hotel.roomList();
-        //hotel.guestList();
-        //hotel.unRegGuestByRoomId(5);
+        //hotel.placeGuest();                 //1. uzduotis
+        //hotel.unRegGuestByRoomId(4);        //2. uzduotis
 
-        //guestDAO.showGuestRoom();
+
+        //hotel.guestList();                  //4. uzduotis
+
+
+        //roomDAO.occupiedRoomATM();
+
+
+        //hotel.roomList();
+
+        //roomDAO.searchForRooms(true);
+
+        // guestDAO.showGuestRoom();
+        //guestDAO.showGuestRoom1();
+
         //roomDAO.showRooms();
+
+
 
 
 

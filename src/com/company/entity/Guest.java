@@ -33,6 +33,13 @@ public class Guest {
         this.surname = surname;
     }
 
+    public Guest(int id, String name, String surname, Room room) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.room = room;
+    }
+
     public int getId() {
         return id;
     }
@@ -71,6 +78,15 @@ public class Guest {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
+                ", room=" + room +
                 '}';
     }
 }
+//    @Override
+//    public String toString() {
+//        return "Guest{" +
+//                "id=" + id +
+//                ", name='" + name + '\'' +
+//                ", surname='" + surname + '\'' +
+//                '}';
+//    }

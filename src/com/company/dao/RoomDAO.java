@@ -22,15 +22,6 @@ public class RoomDAO {
         session.save(room);
         session.getTransaction().commit();
     }
-//    public void insert (Room room){
-//        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-//        session.beginTransaction();
-//
-//        session.save(room);
-//
-//        session.getTransaction().commit();
-//
-//    }
 
     public List<Room> searchForRooms(){
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -73,56 +64,13 @@ public class RoomDAO {
         session.getTransaction().commit();
         return rooms;
     }
-
-    public int updateByStatusFalse(int id) {//Neveikia
+    public List<Room> occupiedRoomATM() {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-        List<Room> list = new ArrayList<>();
-        list = session.createQuery("UPDATE Room s SET e=s.in_use=false WHERE s.number="+id).getResultList();
-                                    // update Student s set e=s.marks=50 where s.studentId=10;
-        session.getTransaction().commit();
-        return id;
-    }
-    public List<Room> showRooms(){
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        List<Room> rooms;
-        rooms = session.createQuery("SELECT r.number, r.in_use, g.name, g.surname FROM Room r JOIN r.guests g").getResultList();
+        List<Room> rooms;               //SELECT g.room, g.name, g.surname, r.in_use
+                                        //FROM Room r, Guest g WHERE r.in_use
+        rooms = session.createQuery("SELECT g.room, g.name, g.surname, r.in_use FROM Room r, Guest g WHERE r.in_use=true").getResultList();
         session.getTransaction().commit();
         return rooms;
     }
-
-//    public List<Guest> showGuestRoom() {
-//        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-//        session.beginTransaction();
-//
-//        List<Guest> guests;
-//        guests = session.createQuery("SELECT c.number, c.in_use, i.name, i.surname FROM Room c " +
-//                "JOIN c.guests i WHERE c.in_use=true").getResultList();
-//
-//        session.getTransaction().commit();
-//        return guests;
-//    }
-
-
-
-//    public List<Room> printStatus(Room room) {
-//        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-//        session.beginTransaction();
-//        List<Room> room;
-//        room = session.createQuery("SELECT c.in_use FROM Room c WHERE c.number = "+room).getResultList();
-//        return room;
-//    }
-
-
-//    public int updateByID(int room, boolean status) {
-//        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-//        session.beginTransaction();
-//
-//        List<Room> list = new ArrayList<>();
-//        list = session.createQuery("UPDATE Room SET in_use ="+status+" WHERE number="+room).getResultList();
-//
-//        return room;
-//    }
-
 }

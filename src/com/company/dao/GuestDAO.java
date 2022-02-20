@@ -19,19 +19,19 @@ public class GuestDAO {
         session.getTransaction().commit();
     }
 
-    public Guest searchByGuestID(int hotel) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        Guest guest = session.get(Guest.class, hotel);
-        session.getTransaction().commit();
-        return guest;
-    }
-
     public List<Guest> showGuestRoom() {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
         List<Guest> guests;
         guests = session.createQuery("SELECT c.number, c.in_use, i.name, i.surname FROM Room c JOIN c.guests i WHERE c.in_use=true").getResultList();
+        session.getTransaction().commit();
+        return guests;
+    }
+    public List<Guest> showGuestRoom1 (){
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        List<Guest> guests;
+        guests = session.createQuery("FROM Guest i JOIN i.room c WHERE c.in_use=true").getResultList();
         session.getTransaction().commit();
         return guests;
     }

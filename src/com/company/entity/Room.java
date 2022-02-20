@@ -27,6 +27,12 @@ public class Room {
         this.in_use = in_use;
     }
 
+    public Room(int number, boolean in_use, List<Guest> guests) {
+        this.number = number;
+        this.in_use = in_use;
+        this.guests = guests;
+    }
+
     public int getNumber() {
         return number;
     }
