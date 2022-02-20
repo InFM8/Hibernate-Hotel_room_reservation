@@ -80,13 +80,45 @@ public class Hotel {
         guestDAO.insert(guest);  //Insertinam
     }
 
+    void roomList() {
+        List<Room> rooms = roomDAO.searchForRooms();
+        for (Room rList : rooms) {
+            System.out.println("   "+rList);
+        }
+    }
+    void guestList() {
+        List<Guest> guests = guestDAO.searchForGuests();
+        for (Guest gList : guests) {
+            System.out.println("   "+gList);
+        }
+    }
+    void unRegGuestByRoomId(int id){
+        Room room = new Room(id, false);
+        roomDAO.update(room);
+    }
 
     public static void main(String[] args) {
         Hotel hotel = new Hotel();
         RoomDAO roomDAO = new RoomDAO();
         GuestDAO guestDAO = new GuestDAO();
 
-        hotel.placeGuest();
+        //hotel.placeGuest();
+        //hotel.roomList();
+        //hotel.guestList();
+        //hotel.unRegGuestByRoomId(5);
+
+        //guestDAO.showGuestRoom();
+        //roomDAO.showRooms();
+
+
+
+
+
+
+
+
+
+
 
 
         HibernateUtil.getSessionFactory().close();

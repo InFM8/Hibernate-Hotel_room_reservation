@@ -3,6 +3,7 @@ package com.company.entity;
 import javax.persistence.*;
 
 @Entity
+@Table(name="sveciai")
 public class Guest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)//A.I.
@@ -19,7 +20,6 @@ public class Guest {
     @ManyToOne()
     @JoinColumn(name="kambario_id")
     private Room room;
-
     public Guest(){}
 
     public Guest(String name, String surname) {
