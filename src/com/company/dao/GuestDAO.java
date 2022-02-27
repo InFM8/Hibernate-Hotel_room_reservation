@@ -7,6 +7,7 @@ import javafx.fxml.LoadException;
 import org.hibernate.Session;
 
 import javax.naming.directory.SearchResult;
+import javax.persistence.EntityManager;
 import java.util.List;
 
 public class GuestDAO {
@@ -76,11 +77,22 @@ public class GuestDAO {
         session.beginTransaction();
         List<Guest> guests;
         guests = session.createQuery("FROM Guest g WHERE g.room.in_use=true").getResultList();
+
         for(Guest g: guests){
             System.out.println(g);
         }
+
+        System.out.println("Isviso uzimta kambariu : "+guests.size());
         //FROM Room r JOIN r.guests g WHERE r.in_use=true
         //FROM Room r, Guest g WHERE r.in_use=true
+        session.getTransaction().commit();
+        return guests;
+    }
+    public List<Guest> setTrue(int id){
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        List<Guest> guests;
+        guests = session.createQuery("UPDATE Guest g SET g.room.in_use=true WHERE g.id=:"+id).getResultList();
         session.getTransaction().commit();
         return guests;
     }

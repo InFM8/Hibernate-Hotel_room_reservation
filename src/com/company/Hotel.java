@@ -5,7 +5,10 @@ import com.company.dao.RoomDAO;
 import com.company.entity.Guest;
 import com.company.entity.Room;
 import com.company.utils.HibernateUtil;
+import org.hibernate.Session;
 
+import javax.persistence.EntityManager;
+import javax.swing.text.html.parser.Entity;
 import java.util.List;
 import java.util.Scanner;
 
@@ -70,13 +73,13 @@ public class Hotel {
 //            //return;
 //        }
         System.out.println("Jusu kambario nr. yra " + room);
-        Room room1 = new Room(room, occupy);
+        //occupy
+        Room room1 = new Room(room, true);
+        roomDAO.update(room1);
+        guest.setRoom(room1);
 
-        roomDAO.update(room1);   //Insertinam, updatinam jei atitinka salygas(Jei neegzistuoja insert.)
-        guest.setRoom(room1);    //Priskiriam kambari klientui (VISIEMS KLIENTAMS KURIU kambario id kazkada buvo toks...)
-        //int id = guest.getId();
-        //guestDAO.updateGuestStatusByID(id);
-        guestDAO.insert(guest);  //Insertinam
+//        roomDAO.updateRoomStatusTrueById(room);
+        guestDAO.insert(guest);
 
     }
 
@@ -95,8 +98,15 @@ public class Hotel {
         }
     }
 
+    void regGuestByRoomId(int id) {
+        Room room = new Room(id, true);
+        room.setIn_use(true);
+        roomDAO.update(room);
+    }
+
     void unRegGuestByRoomId(int id) {
-        Room room = new Room(id, false);
+
+        Room room = new Room(id);
         room.setIn_use(false);
         roomDAO.update(room);
         System.out.println("Svecias sekmingai isregistruotas\n");
@@ -106,6 +116,7 @@ public class Hotel {
         System.out.println("Iveskite kambario numeri is kurio isvyko svecias : ");
         int s = sc.nextInt();
         unRegGuestByRoomId(s);
+
     }
 
     void func() {
@@ -140,9 +151,17 @@ public class Hotel {
 
     public static void main(String[] args) {
         Hotel h = new Hotel();
+        RoomDAO roomDAO = new RoomDAO();
+        GuestDAO guestDAO = new GuestDAO();
+        //h.func();
 
-        h.func();
+        //roomDAO.updateRoomStatusTrueById(2);
+        //roomDAO.searchStatusByInt(2);
+        //guestDAO.occupiedRoomAtTheMoment();
 
+        //guestDAO.setTrue(2);
+
+         h.unRegGuestByRoomId(1);
 
         HibernateUtil.getSessionFactory().close();
     }

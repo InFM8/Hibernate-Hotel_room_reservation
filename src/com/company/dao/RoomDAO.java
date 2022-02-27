@@ -9,12 +9,7 @@ import java.util.List;
 
 public class RoomDAO {
     public RoomDAO(){}
-    public void insert (int room){
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        session.save(room);
-        session.getTransaction().commit();
-    }
+
     public void insertRooms (Room room){
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
@@ -36,6 +31,17 @@ public class RoomDAO {
         session.update(room);
         session.getTransaction().commit();
     }
+
+    public List<Room> updateRoomStatusTrueById(int id){
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        List<Room> rooms;
+
+        rooms = session.createQuery("UPDATE Room r SET r.in_use=true WHERE r.number="+id).getResultList();
+
+        session.getTransaction().commit();
+        return rooms;
+    }
     public Room searchByID(int id) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
@@ -43,6 +49,7 @@ public class RoomDAO {
         session.getTransaction().commit();
         return room;
     }
+
     public boolean searchForRooms(boolean free) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
@@ -60,7 +67,10 @@ public class RoomDAO {
         session.beginTransaction();
         List<Room> rooms;
         rooms = session.createQuery("SELECT c.in_use FROM Room c WHERE c.number="+num).getResultList();
-        System.out.println(rooms);
+
+        System.out.println("Status : "+rooms);
+
+
         session.getTransaction().commit();
         return rooms;
     }
