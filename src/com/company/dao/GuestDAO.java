@@ -69,6 +69,7 @@ public class GuestDAO {
         List<Guest> guests;
         guests = session.createQuery("FROM Guest").getResultList();
         session.getTransaction().commit();
+        System.out.println("\nIs viso buvo apsilanke sveciu : "+guests.size()+"\n");
         return guests;
     }
 

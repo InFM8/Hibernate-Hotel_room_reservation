@@ -36,9 +36,7 @@ public class RoomDAO {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
         List<Room> rooms;
-
         rooms = session.createQuery("UPDATE Room r SET r.in_use=true WHERE r.number="+id).getResultList();
-
         session.getTransaction().commit();
         return rooms;
     }
@@ -70,18 +68,7 @@ public class RoomDAO {
 
         System.out.println("Status : "+rooms);
 
-
         session.getTransaction().commit();
-        return rooms;
-    }
-    public List<Room> occupiedRoomATM() {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        List<Room> rooms;               //SELECT g.room, g.name, g.surname, r.in_use
-                                        //FROM Room r, Guest g WHERE r.in_use=true
-                        //SELECT g.room, g.name, g.surname, r.in_use FROM Room r JOIN r.guests g WHERE r.in_use=true
-        rooms = session.createQuery("FROM Room r JOIN r.guests g WHERE r.in_use=true").getResultList();
-
         return rooms;
     }
 }

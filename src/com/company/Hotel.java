@@ -5,10 +5,6 @@ import com.company.dao.RoomDAO;
 import com.company.entity.Guest;
 import com.company.entity.Room;
 import com.company.utils.HibernateUtil;
-import org.hibernate.Session;
-
-import javax.persistence.EntityManager;
-import javax.swing.text.html.parser.Entity;
 import java.util.List;
 import java.util.Scanner;
 
@@ -68,21 +64,13 @@ public class Hotel {
             System.out.println("Siuo metu laisvu kambariu nera");
             return;
         }
-//        if (!occupyRoom(room)) {
-//            System.out.println("Numeris yra uzimtas, arba tokio numerio nera");
-//            //return;
-//        }
+
         System.out.println("Jusu kambario nr. yra " + room);
-        //occupy
         Room room1 = new Room(room, true);
         roomDAO.update(room1);
         guest.setRoom(room1);
-
-//        roomDAO.updateRoomStatusTrueById(room);
         guestDAO.insert(guest);
-
     }
-
 
     void roomList() {
         List<Room> rooms = roomDAO.searchForRooms();
@@ -144,24 +132,11 @@ public class Hotel {
         } else {
             System.out.println("Blogai ivesta");
         }
-
-        //roomDAO.searchForRooms(true);
-        //hotel.roomList();
     }
 
     public static void main(String[] args) {
         Hotel h = new Hotel();
-        RoomDAO roomDAO = new RoomDAO();
-        GuestDAO guestDAO = new GuestDAO();
-        //h.func();
-
-        //roomDAO.updateRoomStatusTrueById(2);
-        //roomDAO.searchStatusByInt(2);
-        //guestDAO.occupiedRoomAtTheMoment();
-
-        //guestDAO.setTrue(2);
-
-         h.unRegGuestByRoomId(1);
+        h.func();
 
         HibernateUtil.getSessionFactory().close();
     }
