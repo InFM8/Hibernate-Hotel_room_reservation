@@ -86,12 +86,6 @@ public class Hotel {
         }
     }
 
-    void regGuestByRoomId(int id) {
-        Room room = new Room(id, true);
-        room.setIn_use(true);
-        roomDAO.update(room);
-    }
-
     void unRegGuestByRoomId(int id) {
 
         Room room = new Room(id);
