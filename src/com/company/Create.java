@@ -3,10 +3,6 @@ package com.company;
 import com.company.dao.RoomDAO;
 import com.company.entity.Room;
 
-/**
- *  Pries paleidziant klase, susikurkite nauja db pavadinimu hotel.
- */
-
 public class Create {
     RoomDAO roomDAO = new RoomDAO();
 

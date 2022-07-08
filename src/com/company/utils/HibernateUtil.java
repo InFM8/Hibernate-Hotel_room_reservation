@@ -2,6 +2,7 @@ package com.company.utils;
 
 import com.company.entity.Guest;
 import com.company.entity.Room;
+import com.company.entity.RoomHistory;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
@@ -33,8 +34,9 @@ public class HibernateUtil {
                 settings.put(Environment.HBM2DDL_AUTO, "update");
 
                 configuration.setProperties(settings);
-                configuration.addAnnotatedClass(Guest.class); //Entity
-                configuration.addAnnotatedClass(Room.class);//Entity
+                configuration.addAnnotatedClass(Guest.class);
+                configuration.addAnnotatedClass(Room.class);
+                configuration.addAnnotatedClass(RoomHistory.class);
 
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                         .applySettings(configuration.getProperties()).build();

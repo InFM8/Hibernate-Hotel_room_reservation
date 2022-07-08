@@ -3,41 +3,45 @@ package com.company.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name="guests")
-public class Guest {
+@Table(name = "History")
+public class RoomHistory {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)//A.I.
-
-    @Column(name="id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
-
-    @Column(name="name")
+    @Column(name = "room")
+    private int room;
+    @Column(name = "name")
     private String name;
-
-    @Column(name="surname")
+    @Column(name = "surname")
     private String surname;
 
-    @OneToOne()
-    @JoinColumn(name="room_id")
-    private Room room;
-    public Guest(){}
 
-    public Guest(String name, String surname) {
+    public RoomHistory(int id, String name, String surname) {
+        this.id = id;
         this.name = name;
         this.surname = surname;
     }
 
-    public Guest(String name, String surname, Room room) {
+    public RoomHistory(String name, String surname) {
         this.name = name;
         this.surname = surname;
-        this.room = room;
     }
 
-    public Guest(int id, String name, String surname, Room room) {
+    public RoomHistory(int id, String name, String surname, int room) {
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.room = room;
+    }
+
+    public RoomHistory(String name, String surname, int room) {
+        this.name = name;
+        this.surname = surname;
+        this.room = room;
+    }
+
+    public RoomHistory() {
     }
 
     public int getId() {
@@ -64,21 +68,22 @@ public class Guest {
         this.surname = surname;
     }
 
-    public Room getRoom() {
+    public int getRoom() {
         return room;
     }
 
-    public void setRoom(Room room) {
+    public void setRoom(int room) {
         this.room = room;
     }
 
+
     @Override
     public String toString() {
-        return "Guest {" +
-                " name = '" + name + '\'' +
-                ", surname ='" + surname + '\'' +
-                ", " + room +
+        return "History {" +
+                "id : " + id +
+                ", name : '" + name + '\'' +
+                ", surname : '" + surname + '\'' +
+                ", room : " + room +
                 '}';
     }
 }
-

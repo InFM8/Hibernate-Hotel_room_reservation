@@ -17,14 +17,6 @@ public class RoomDAO {
         session.getTransaction().commit();
     }
 
-    public List<Room> searchForRooms(){
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        List<Room> rooms;
-        rooms = session.createQuery("FROM Room").getResultList();
-        return rooms;
-
-    }
     public void update(Room room) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
@@ -46,29 +38,5 @@ public class RoomDAO {
         Room room = session.get(Room.class, id);
         session.getTransaction().commit();
         return room;
-    }
-
-    public boolean searchForRooms(boolean free) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-
-        List<Room> list;
-        list = session.createQuery("FROM Room c WHERE c.in_use="+free).getResultList();
-        for(Room freeRooms : list) {
-            System.out.println(freeRooms);
-        }
-        return free;
-    }
-
-    public List<Room> searchStatusByInt(int num) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        List<Room> rooms;
-        rooms = session.createQuery("SELECT c.in_use FROM Room c WHERE c.number="+num).getResultList();
-
-        System.out.println("Status : "+rooms);
-
-        session.getTransaction().commit();
-        return rooms;
     }
 }

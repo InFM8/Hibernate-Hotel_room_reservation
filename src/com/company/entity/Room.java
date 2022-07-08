@@ -1,21 +1,19 @@
 package com.company.entity;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
-@Table(name="kambariai")
+@Table(name="rooms")
 public class Room {
     @Id
-    @Column(name = "kambarys")
+    @Column(name = "room")
     private int number;
 
-    @Column(name = "statusas")
+    @Column(name = "status")
     boolean in_use;
 
-
-    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
-    private List<Guest> guests;
+    @OneToOne(mappedBy = "room", cascade = CascadeType.ALL)
+    private Guest guests;
     public Room(){}
 
     public Room(int number) {
@@ -27,8 +25,13 @@ public class Room {
         this.in_use = in_use;
     }
 
-    public Room(int number, boolean in_use, List<Guest> guests) {
+    public Room(int number, boolean in_use, Guest guests) {
         this.number = number;
+        this.in_use = in_use;
+        this.guests = guests;
+    }
+
+    public Room(boolean in_use, Guest guests) {
         this.in_use = in_use;
         this.guests = guests;
     }
@@ -49,19 +52,18 @@ public class Room {
         this.in_use = in_use;
     }
 
-    public List<Guest> getGuests() {
+    public Guest getGuests() {
         return guests;
     }
 
-    public void setGuests(List<Guest> guests) {
+    public void setGuests(Guest guests) {
         this.guests = guests;
     }
-
     @Override
     public String toString() {
-        return "Room{" +
-                "number=" + number +
-                ", in_use=" + in_use +
+        return "Room {" +
+                "number:  " + number +
+                ", At the moment: " + (in_use ? " Occupied" : " Empty") +
                 '}';
     }
 }
