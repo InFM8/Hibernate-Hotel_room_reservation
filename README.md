@@ -6,9 +6,10 @@ and reports all messages.
 * Hibernate
 * MySQL
 
+____________________________________
+#### Guidelines for localhost
 
-#### Guidelines for localhost (I use [XAMPP](https://www.apachefriends.org/))
-
+0. Turn on your database(I use [XAMPP](https://www.apachefriends.org/))
 1. Clone this repository
 2. localhost/phpmyadmin -> SQL 
 3. CREATE DATABASE hotel;
