@@ -29,8 +29,8 @@ public class GuestDAO {
         session.getTransaction().commit();
         return guest;
     }
-    public Guest searchGuestByRoomId(int id){
-            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+    public Guest searchGuestByRoomId(int id){   // Open session instead of getCurrentSession because of exception (unregister not existing guest)
+            Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             Guest guests = (Guest) session.createQuery("FROM Guest g WHERE g.room.id=" + id).getSingleResult();
             session.getTransaction().commit();

@@ -7,6 +7,7 @@ import com.company.entity.Guest;
 import com.company.entity.Room;
 import com.company.entity.RoomHistory;
 import com.company.utils.HibernateUtil;
+
 import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
@@ -56,10 +57,10 @@ public class Main {
         int room = findFreeRoom();
 
         if (room == -1) {
-            System.out.println("All rooms occupied at the moment");
+            System.err.println("All rooms occupied at the moment");
             return;
         }
-        if(occupyRoom(room)) {
+        if (occupyRoom(room)) {
             System.out.println("Enter a guest name : ");
             String name = sc.next();
             System.out.println("Enter a guest surname : ");
@@ -72,24 +73,29 @@ public class Main {
             roomDAO.update(room1);
             guest.setRoom(room1);
             guestDAO.insert(guest);
-            System.out.println("\nGuest room number is : " + room+"\n");
+            System.out.println(TEXT_GREEN+"\nRegistered successfully"+TEXT_RESET);
+            System.out.println("\nWelcome, "+TEXT_YELLOW+name+" "+surname+ TEXT_RESET+", you room number is : " + room + "\n");
         }
     }
 
     void unRegGuestByRoomId(int id) {
-        if (id < 1 || id > 5){
-            System.out.println("Room with id : "+id+", doesn't exist");
-            System.exit(0);
-        }
+        try {
+            Guest guest = guestDAO.searchGuestByRoomId(id);
+            Room room = new Room(id);
 
-
-        Guest guest = guestDAO.searchGuestByRoomId(id);
-        Room room = new Room(id);
-        if(guest!=null) {
             room.setIn_use(false);
             roomDAO.update(room);
             guestDAO.delete(guest);
-            System.out.println("\nGuest from " + id + " room, successfully unregistered\n");
+            System.out.println(TEXT_GREEN+"\nSuccessfully unregistered"+TEXT_RESET);
+            System.out.println("\nGuest - "+TEXT_YELLOW+guest.getName() +" "+ guest.getSurname()+ TEXT_RESET+
+                    " from "+TEXT_YELLOW + id + TEXT_RESET+ " room checked out.\n");
+
+        } catch (javax.persistence.PersistenceException e) {
+            System.err.println("Can't unregister guest from room " + id + ", because it's empty! ");
+
+            if (e.getCause() instanceof org.hibernate.exception.ConstraintViolationException) {
+                System.err.println("exception: " + e);
+            }
         }
     }
 
@@ -101,41 +107,50 @@ public class Main {
     }
 
     void unRegisterGuest() {
-        System.out.println("Enter a room number which is empty : ");
-        int num = sc.nextInt();
+        System.out.println("Enter a room number that the guest checked out :\n ");
 
-        unRegGuestByRoomId(num);
+        String num = sc.next();
+        if(num.equals("1") || num.equals("2") || num.equals("3") || num.equals("4")) {
+            unRegGuestByRoomId(Integer.parseInt(num));
+        } else {
+            System.err.println("Wrong input, you entered :\n");
+            System.out.println(num);
+            func();
+        }
     }
 
     void func() {
         Main hotel = new Main();
         Scanner sc = new Scanner(System.in);
-        System.out.println("\n   Select the available actions\n" +
-                "1. Registering a guest\n" +
-                "2. Unregistering a guest\n" +
+        System.out.println(TEXT_GREEN+"\n   Select available options\n" +TEXT_RESET+
+                "1. Register a guest\n" +
+                "2. Unregister a guest\n" +
                 "3. Occupied rooms(status)\n" +
                 "4. History of rooms\n" +
                 ": ");
-        int s = sc.nextInt();
-        if (s == 1) {
-            System.out.println("-     Registering a guest\n");
+        String s = sc.next();
+        if (s.equals("1")) {
+            System.out.println("-     Register a guest\n");
             hotel.placeGuest();
-        } else if (s == 2) {
-            System.out.println("-     Unregistering a guest by room id\n");
+        } else if (s.equals("2")) {
+            System.out.println("-     Unregister a guest by room id\n");
             hotel.unRegisterGuest();
-        } else if (s == 3) {
+        } else if (s.equals("3")) {
             System.out.println("-     Occupied rooms at the moment\n");
             guestDAO.occupiedRoomAtTheMoment();
-
-        } else if (s == 4) {
+        } else if (s.equals("4")) {
             System.out.println("-     History of rooms and status\n");
             hotel.guestList();
         } else {
-            System.out.println("Wrong input");
-            System.exit(0);
-
+            System.err.println("\nWrong input, you entered : \n");
+            System.out.println(s);
+            func();
         }
     }
+    public static final String TEXT_YELLOW = "\u001B[33m";
+
+    public static final String TEXT_GREEN = "\u001B[32m";
+    public static final String TEXT_RESET = "\u001B[0m";
 
     public static void main(String[] args) {
         Main main = new Main();
@@ -144,13 +159,13 @@ public class Main {
 
         System.out.println("\nWill you continue working? (yes/no): \n");
         String ask = main.sc.next();
-        if(!ask.equals("yes")) {
-            System.out.println("App is shutting down");
+        if (!ask.toLowerCase(Locale.ROOT).equals("yes")) {
+            System.err.println("Shutting down");
             System.exit(0);
         }
         while (ask.toLowerCase(Locale.ROOT).equals("yes")) {
-        main(args);
-        HibernateUtil.getSessionFactory().close();
+            main(args);
+            HibernateUtil.getSessionFactory().close();
         }
 
         HibernateUtil.getSessionFactory().close();

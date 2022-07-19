@@ -76,14 +76,16 @@ public class RoomHistory {
         this.room = room;
     }
 
-
+    public static final String TEXT_YELLOW = "\u001B[33m";
+    public static final String TEXT_RESET = "\u001B[0m";
     @Override
     public String toString() {
         return "History {" +
                 "id : " + id +
-                ", name : '" + name + '\'' +
-                ", surname : '" + surname + '\'' +
-                ", room : " + room +
+                ", name : '"+TEXT_YELLOW + name + TEXT_RESET +
+                ", surname : '"+TEXT_YELLOW + surname + TEXT_RESET +
+                ", room : "+TEXT_YELLOW + room + TEXT_RESET+
                 '}';
     }
+
 }

@@ -59,11 +59,15 @@ public class Room {
     public void setGuests(Guest guests) {
         this.guests = guests;
     }
+
+    public static final String TEXT_YELLOW = "\u001B[33m";
+    public static final String TEXT_RED = "\u001B[31m";
+    public static final String TEXT_RESET = "\u001B[0m";
     @Override
     public String toString() {
         return "Room {" +
-                "number:  " + number +
-                ", At the moment: " + (in_use ? " Occupied" : " Empty") +
+                "number:  "+TEXT_YELLOW + number + TEXT_RESET+
+                ", At the moment: "+TEXT_RED+ (in_use ? " Occupied"+TEXT_RESET : " Empty") +
                 '}';
     }
 }

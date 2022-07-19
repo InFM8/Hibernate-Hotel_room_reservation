@@ -3,24 +3,26 @@ package com.company.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name="guests")
+@Table(name = "guests")
 public class Guest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)//A.I.
 
-    @Column(name="id")
+    @Column(name = "id")
     private int id;
 
-    @Column(name="name")
+    @Column(name = "name")
     private String name;
 
-    @Column(name="surname")
+    @Column(name = "surname")
     private String surname;
 
     @OneToOne()
-    @JoinColumn(name="room_id")
+    @JoinColumn(name = "room_id")
     private Room room;
-    public Guest(){}
+
+    public Guest() {
+    }
 
     public Guest(String name, String surname) {
         this.name = name;
@@ -72,11 +74,14 @@ public class Guest {
         this.room = room;
     }
 
+    public static final String TEXT_YELLOW = "\u001B[33m";
+    public static final String TEXT_RESET = "\u001B[0m";
+
     @Override
     public String toString() {
         return "Guest {" +
-                " name = '" + name + '\'' +
-                ", surname ='" + surname + '\'' +
+                " name = '" + TEXT_YELLOW + name + TEXT_RESET + '\'' +
+                ", surname ='" + TEXT_YELLOW + surname + TEXT_RESET + '\'' +
                 ", " + room +
                 '}';
     }
